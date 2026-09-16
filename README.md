@@ -2,13 +2,15 @@
 
 **Integrantes do grupo:**
 
-| Nome | RA |
+| Nome | RM |
 |---|---|
-| _(preencher)_ | _(preencher)_ |
-| _(preencher)_ | _(preencher)_ |
-| _(preencher)_ | _(preencher)_ |
+| _Davi Munhoz_ | _566223_ |
+| _Diogo Oliveira_ | _562559_ |
+| _Leandro Simoneli_ | _566539_ |
+| _Lucas Aquino_ | _562414_ |
+| _Lucas Bonato_ | _565356_ |
 
-**SEED do grupo (reprodutibilidade):** `SEED = 1` → **trocar pelo número oficial do grupo** antes da entrega (basta rodar `python src/gerar_dados.py --seed <numero_do_grupo>` e reexecutar os notebooks).
+**SEED do grupo (reprodutibilidade):** `SEED = 566223`
 
 ---
 
@@ -66,7 +68,7 @@ Nenhum destes algoritmos usa funções prontas que resolvam o núcleo do problem
 pip install -r requirements.txt
 
 # 2. Gerar os dados (reprodutível via SEED = número do grupo)
-python src/gerar_dados.py --seed 1
+python src/gerar_dados.py --seed 566223
 
 # 3. Rodar os pipelines completos (gera as figuras em figures/)
 python src/analise_q1.py
