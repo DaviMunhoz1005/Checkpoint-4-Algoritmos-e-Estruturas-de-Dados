@@ -82,16 +82,16 @@ jupyter notebook notebooks/questao1.ipynb
 jupyter notebook notebooks/questao2.ipynb
 ```
 
-## 6. Resultados (seed = 1)
+## 6. Resultados (seed = 566223)
 
 **Questão 1** (capacidade do veículo = 30):
-- Greedy: benefício total = 531
-- Programação Dinâmica (ótimo): benefício total = 575
+- Greedy: benefício total = 426
+- Programação Dinâmica (ótimo): benefício total = 517
 - Contraexemplo mínimo (3 pontos, capacidade 10): Greedy = 11, DP = 16 → Greedy não é ótimo.
 
 **Questão 2:**
 - Intervalo crítico encontrado por Força Bruta e por Divide & Conquer: **idêntico** em todas as instâncias testadas (verificação cruzada automática em `analise_q2.py` e em `tests/test_questao2.py`).
-- Experimento de escalabilidade (`data/escalabilidade.csv`): em `n = 5.000`, Força Bruta ≈ 6,6 s contra Divide & Conquer ≈ 0,095 s.
+- Experimento de escalabilidade (`data/escalabilidade.csv`): em `n = 5.000`, Força Bruta ≈ 0,99 s contra Divide & Conquer ≈ 0,022 s.
 
 ## 7. Complexidade
 
@@ -118,6 +118,6 @@ Resumo (detalhamento completo em `docs/analise_complexidade.md`):
 
 > **Qual foi a decisão algorítmica mais importante tomada pelo grupo? Apresente uma alternativa que vocês descartaram e explique, considerando tempo, memória e qualidade da solução, por que a abordagem escolhida foi considerada mais adequada.**
 
-A decisão mais importante foi modelar a seleção de pontos de atendimento sob capacidade limitada (Questão 1) como mochila 0/1 resolvida por Programação Dinâmica, em vez de confiar apenas na heurística gulosa por razão benefício/demanda/distância. A alternativa descartada foi usar somente o Greedy como solução final: é mais rápido (`O(N log N)` contra `O(N·C)` da DP) e usa menos memória (`O(N)` contra `O(N·C)`), mas não garante otimalidade. Construímos um contraexemplo mínimo (três pontos, capacidade 10) em que o Greedy escolhe o item de maior razão valor/peso (benefício 11) e descarta dois itens que, juntos, cabem exatamente na capacidade e valem mais (benefício 16) — perda de 31% de benefício só pela ordem gulosa. No dataset completo (21 pontos, capacidade 30), o mesmo padrão se repetiu: a DP superou o Greedy em 44 unidades de benefício (575 contra 531), equivalente a atender mais pessoas do que o Greedy deixaria de fora.
+A decisão mais importante foi modelar a seleção de pontos de atendimento sob capacidade limitada (Questão 1) como mochila 0/1 resolvida por Programação Dinâmica, em vez de confiar apenas na heurística gulosa por razão benefício/demanda/distância. A alternativa descartada foi usar somente o Greedy como solução final: é mais rápido (`O(N log N)` contra `O(N·C)` da DP) e usa menos memória (`O(N)` contra `O(N·C)`), mas não garante otimalidade. Construímos um contraexemplo mínimo (três pontos, capacidade 10) em que o Greedy escolhe o item de maior razão valor/peso (benefício 11) e descarta dois itens que, juntos, cabem exatamente na capacidade e valem mais (benefício 16) — perda de 31% de benefício só pela ordem gulosa. No dataset completo (21 pontos, capacidade 30), o mesmo padrão se repetiu: a DP superou o Greedy em 91 unidades de benefício (517 contra 426), equivalente a atender mais pessoas do que o Greedy deixaria de fora.
 
 Como o número de pontos é pequeno (dezenas, não milhões) e a capacidade do veículo é um inteiro moderado, o custo `O(N·C)` da DP é tratável (tabela com poucas centenas de células) e a garantia de otimalidade compensa a perda de velocidade. Mantivemos o Greedy no pipeline como uma primeira passada rápida para ORDENAR o atendimento (útil operacionalmente: dá para começar a despachar recursos antes de terminar de calcular o subconjunto ótimo), mas a decisão final de "quais pontos entram no veículo" usa a DP. Essa combinação — Greedy para velocidade de decisão em campo, DP para a alocação final de recursos escassos — equilibra tempo de resposta e qualidade da solução, exatamente o tipo de escolha que uma operação real de Defesa Civil precisaria fazer sob pressão de tempo e recursos limitados.
